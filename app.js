@@ -16,7 +16,10 @@ app.get("/:city", async (req, res) => {
   let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.OPEN_WEATHER_APIKEY}`;
   let data = await (await fetch(url)).json();
   console.log(data);
-  res.render("weather.ejs", { data: data });
+  res.render("weather.ejs", {
+    data,
+    temp: (data.main.temp - 273.15).toFixed(2),
+  });
 });
 
 app.listen(3000, () => {
